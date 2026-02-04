@@ -8,22 +8,81 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+1.Load the dataset into a DataFrame and explore its contents to understand the data structure. 
+2.Separate the dataset into independent (X) and dependent (Y) variables, and split them into training and testing sets. 
+3.Create a linear regression model and fit it using the training data.
+4.Predict the results for the testing set and plot the training and testing sets with fitted lines.
 
 ## Program:
 ```
 /*
 Program to implement the linear regression using gradient descent.
-Developed by: 
-RegisterNumber:  
+Developed by: konduru santhosh
+RegisterNumber: 212225240074  
 */
+DEVELOPED BY: JEENSFER JO
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+#Load the Data
+data=pd.read_csv("C:/Users/acer/Downloads/50_Startups.csv")
+x=data["R&D Spend"].values
+y=data["Profit"].values
+
+#Feature Scaling
+x_mean=np.mean(x)
+x_std=np.std(x)
+x=(x-x_mean)/x_std
+
+#Parameters
+w=0.0
+b=0.0
+alpha=0.01
+epochs=100
+n=len(x)
+
+losses=[]
+
+#Gradient Descent
+for i in range(epochs):
+    y_hat=w*x+b
+    loss=np.mean((y_hat-y)**2)
+    losses.append(loss)
+    
+    dw=(2/n)*np.sum((y_hat-y)*x)
+    db=(2/n)*np.sum(y_hat-y)
+    
+    w-=alpha*dw
+    b-=alpha*db
+
+#Plot
+plt.figure(figsize=(12,5))
+
+plt.subplot(1,2,1)
+plt.plot(losses)
+plt.xlabel("Iterations")
+plt.ylabel("Loss(MSE)")
+plt.title("Loss vs Iterations")
+
+plt.subplot(1,2,2)
+plt.scatter(x,y)
+x_sorted=np.argsort(x)
+plt.plot(x[x_sorted],(w*x+b)[x_sorted],color="red")
+plt.xlabel("R&D Spend (scaled)")
+plt.ylabel("Profit")
+plt.title("Linear Regression Fit")
+
+plt.tight_layout()
+plt.show()
+
+print(f"Final weight (w): {w}")
+print(f"Final bias (b): {b}")
 ```
 
 ## Output:
-![linear regression using gradient descent](sam.png)
+<img width="933" height="429" alt="image" src="https://github.com/user-attachments/assets/943b66f9-b6da-4e62-a963-f16754569b8d" />
+
 
 
 ## Result:
